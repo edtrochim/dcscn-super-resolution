@@ -63,12 +63,12 @@ class TensorflowGraph(tf.Graph):
         self.init_session(flags.gpu_device_id)
 
     def init_session(self, device_id=0):
-        config = tf.ConfigProto()
+        config = tf.compat.v1.ConfigProto()
         config.gpu_options.allow_growth = True  ## just for use the necesary memory of GPU
         config.gpu_options.visible_device_list = str(device_id)  ## this values depends of numbers of GPUs
 
         print("Session and graph initialized.")
-        self.sess = tf.InteractiveSession(config=config, graph=self)
+        self.sess = tf.compat.v1.InteractiveSession(config=config, graph=self)
 
     def init_all_variables(self):
         self.sess.run(tf.global_variables_initializer())
