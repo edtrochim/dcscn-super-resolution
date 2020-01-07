@@ -99,7 +99,7 @@ class SuperResolution(tf_graph.TensorflowGraph):
         if flags.initialize_tf_log:
             util.clean_dir(self.tf_log_dir)
         util.set_logging(flags.log_filename, stream_log_level=logging.INFO, file_log_level=logging.INFO,
-                         tf_log_level=tf.logging.WARN)
+                         tf_log_level=tf.compat.v1.logging.WARN)
         logging.info("\nDCSCN v2-------------------------------------")
         logging.info("%s [%s]" % (util.get_now_date(), self.name))
 
