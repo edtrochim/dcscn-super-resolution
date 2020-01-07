@@ -104,7 +104,7 @@ def set_logging(filename, stream_log_level, file_log_level, tf_log_level):
     logger.addHandler(file_log)
     logger.setLevel(min(stream_log_level, file_log_level))
 
-    tf.logging.set_verbosity(tf_log_level)
+    tf.compat.v1.logging.set_verbosity(tf_log_level)
 
 
 def save_image(filename, image, print_console=False):
@@ -352,7 +352,7 @@ def xavier_cnn_initializer(shape, uniform=True):
 def he_initializer(shape):
     n = shape[0] * shape[1] * shape[2]
     stddev = math.sqrt(2.0 / n)
-    return tf.truncated_normal(shape=shape, stddev=stddev)
+    return tf.random.truncated_normal(shape=shape, stddev=stddev)
 
 
 def upsample_filter(size):
@@ -421,7 +421,7 @@ def add_summaries(scope_name, model_name, var, header_name="", save_stddev=True,
     with tf.name_scope(scope_name):
         mean_var = tf.reduce_mean(var)
         if save_mean:
-            tf.summary.scalar(header_name + "mean/" + model_name, mean_var)
+            tf.compat.v1.summary.scalar(header_name + "mean/" + model_name, mean_var)
 
         if save_stddev:
             stddev_var = tf.sqrt(tf.reduce_mean(tf.square(var - mean_var)))
@@ -432,7 +432,7 @@ def add_summaries(scope_name, model_name, var, header_name="", save_stddev=True,
 
         if save_min:
             tf.summary.scalar(header_name + "min/" + model_name, tf.reduce_min(var))
-        tf.summary.histogram(header_name + model_name, var)
+        tf.compat.v1.summary.histogram(header_name + model_name, var)
 
 
 def log_scalar_value(writer, name, value, step):
