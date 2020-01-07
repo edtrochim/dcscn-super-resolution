@@ -236,7 +236,7 @@ class TensorflowGraph(tf.Graph):
         self.H.append(h)
 
     def build_pixel_shuffler_layer(self, name, h, scale, input_filters, output_filters, activator=None, depthwise_separable=False):
-        with tf.variable_scope(name):
+        with tf.compat.v1.variable_scope(name):
             if (depthwise_separable):
                 self.build_depthwise_separable_conv(name + "_CNN", h, self.cnn_size, input_filters, scale * scale * output_filters,
                             use_batch_norm=False,
