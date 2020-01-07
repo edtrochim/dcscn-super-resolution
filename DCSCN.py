@@ -259,7 +259,7 @@ class SuperResolution(tf_graph.TensorflowGraph):
             input_tensor = self.H[-1]
             total_output_feature_num += output_feature_num
 
-        with tf.variable_scope("Concat"):
+        with tf.compat.v1.variable_scope("Concat"):
             self.H_concat = tf.concat(self.H, 3, name="H_concat")
         self.features += " Total: (%d)" % total_output_feature_num
 
