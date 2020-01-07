@@ -224,11 +224,11 @@ class SuperResolution(tf_graph.TensorflowGraph):
 
     def build_graph(self):
 
-        self.x = tf.placeholder(tf.float32, shape=[None, None, None, self.channels], name="x")
-        self.y = tf.placeholder(tf.float32, shape=[None, None, None, self.output_channels], name="y")
-        self.x2 = tf.placeholder(tf.float32, shape=[None, None, None, self.output_channels], name="x2")
-        self.dropout = tf.placeholder(tf.float32, shape=[], name="dropout_keep_rate")
-        self.is_training = tf.placeholder(tf.bool, name="is_training")
+        self.x = tf.compat.v1.placeholder(tf.float32, shape=[None, None, None, self.channels], name="x")
+        self.y = tf.compat.v1.placeholder(tf.float32, shape=[None, None, None, self.output_channels], name="y")
+        self.x2 = tf.compat.v1.placeholder(tf.float32, shape=[None, None, None, self.output_channels], name="x2")
+        self.dropout = tf.compat.v1.placeholder(tf.float32, shape=[], name="dropout_keep_rate")
+        self.is_training = tf.compat.v1.placeholder(tf.bool, name="is_training")
 
         # building feature extraction layers
 
