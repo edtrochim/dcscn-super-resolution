@@ -122,4 +122,4 @@ def evaluate_model(model, test_data):
 
 
 if __name__ == '__main__':
-    tf.app.run()
+    tf.compat.v1.app.run()
