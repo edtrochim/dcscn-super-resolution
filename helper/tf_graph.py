@@ -71,7 +71,7 @@ class TensorflowGraph(tf.Graph):
         self.sess = tf.compat.v1.InteractiveSession(config=config, graph=self)
 
     def init_all_variables(self):
-        self.sess.run(tf.global_variables_initializer())
+        self.sess.run(tf.compat.v1.global_variables_initializer())
         print("Model initialized.")
 
     def build_activator(self, input_tensor, features: int, activator="", leaky_relu_alpha=0.1, base_name=""):
@@ -116,7 +116,7 @@ class TensorflowGraph(tf.Graph):
 
     def build_conv(self, name, input_tensor, cnn_size, input_feature_num, output_feature_num, use_bias=False,
                    activator=None, use_batch_norm=False, dropout_rate=1.0):
-        with tf.variable_scope(name):
+        with tf.compat.v1.variable_scope(name):
             w = util.weight([cnn_size, cnn_size, input_feature_num, output_feature_num],
                             stddev=self.weight_dev, name="conv_W", initializer=self.initializer)
 
@@ -245,7 +245,7 @@ class TensorflowGraph(tf.Graph):
                 self.build_conv(name + "_CNN", h, self.cnn_size, input_filters, scale * scale * output_filters,
                             use_batch_norm=False,
                             use_bias=True)
-            self.H.append(tf.depth_to_space(self.H[-1], scale))
+            self.H.append(tf.compat.v1.depth_to_space(self.H[-1], scale))
             self.build_activator(self.H[-1], output_filters, activator, base_name=name)
 
     def copy_log_to_archive(self, archive_name):
@@ -297,9 +297,9 @@ class TensorflowGraph(tf.Graph):
 
     def build_summary_saver(self, with_saver=True):
         if self.enable_log:
-            self.summary_op = tf.summary.merge_all()
-            self.train_writer = tf.summary.FileWriter(self.tf_log_dir + "/train")
+            self.summary_op = tf.compat.v1.summary.merge_all()
+            self.train_writer = tf.compat.v1.summary.FileWriter(self.tf_log_dir + "/train")
             self.test_writer = tf.summary.FileWriter(self.tf_log_dir + "/test", graph=self.sess.graph)
 
         if (with_saver):
-            self.saver = tf.train.Saver(max_to_keep=None)
+            self.saver = tf.compat.v1.train.Saver(max_to_keep=None)
