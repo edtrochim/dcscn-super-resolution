@@ -87,7 +87,7 @@ class TensorflowGraph(tf.Graph):
         elif activator == "leaky_relu":
             output = tf.maximum(input_tensor, leaky_relu_alpha * input_tensor, name=base_name + "_leaky")
         elif activator == "prelu":
-            with tf.variable_scope("prelu"):
+            with tf.compat.v1.variable_scope("prelu"):
                 alphas = tf.Variable(tf.constant(0.1, shape=[features]), name=base_name + "_prelu")
                 if self.save_weights:
                     util.add_summaries("prelu_alpha", self.name, alphas, save_stddev=False, save_mean=False)
@@ -299,7 +299,7 @@ class TensorflowGraph(tf.Graph):
         if self.enable_log:
             self.summary_op = tf.compat.v1.summary.merge_all()
             self.train_writer = tf.compat.v1.summary.FileWriter(self.tf_log_dir + "/train")
-            self.test_writer = tf.summary.FileWriter(self.tf_log_dir + "/test", graph=self.sess.graph)
+            self.test_writer = tf.compat.v1.summary.FileWriter(self.tf_log_dir + "/test", graph=self.sess.graph)
 
         if (with_saver):
             self.saver = tf.compat.v1.train.Saver(max_to_keep=None)
