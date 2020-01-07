@@ -425,13 +425,13 @@ def add_summaries(scope_name, model_name, var, header_name="", save_stddev=True,
 
         if save_stddev:
             stddev_var = tf.sqrt(tf.reduce_mean(tf.square(var - mean_var)))
-            tf.summary.scalar(header_name + "stddev/" + model_name, stddev_var)
+            tf.compat.v1.summary.scalar(header_name + "stddev/" + model_name, stddev_var)
 
         if save_max:
-            tf.summary.scalar(header_name + "max/" + model_name, tf.reduce_max(var))
+            tf.compat.v1.summary.scalar(header_name + "max/" + model_name, tf.reduce_max(var))
 
         if save_min:
-            tf.summary.scalar(header_name + "min/" + model_name, tf.reduce_min(var))
+            tf.compat.v1.summary.scalar(header_name + "min/" + model_name, tf.reduce_min(var))
         tf.compat.v1.summary.histogram(header_name + model_name, var)
 
 
